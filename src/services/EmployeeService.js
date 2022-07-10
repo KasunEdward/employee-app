@@ -14,8 +14,24 @@ export const AddEmployee = createAsyncThunk(
         const newEmployee = {uuid, ...employee};
         const employees = await localStorage.getItem('employeeList') ? JSON.parse(localStorage.getItem('employeeList')): [];
         await localStorage.setItem('employeeList', JSON.stringify([...employees, newEmployee]));
-        console.log(newEmployee);
         return [...employees, newEmployee];
+    }
+)
+
+//Edit employee details
+export const EditEmployee = createAsyncThunk(
+    "employee/editEmployee",
+    async (updatedRec) => {
+        const employees = await localStorage.getItem('employeeList') ? JSON.parse(localStorage.getItem('employeeList')): [];
+        const updatedEmployees = employees.map(employee =>{
+            if(employee.uuid === updatedRec.uuid){
+                return updatedRec
+            }
+
+            return employee;
+        })
+        await localStorage.setItem('employeeList', JSON.stringify(updatedEmployees));
+        return updatedEmployees;
     }
 )
 

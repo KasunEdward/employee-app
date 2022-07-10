@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetEmployees, AddEmployee, DeleteEmployee } from "../services/employeeService";
+import { GetEmployees, AddEmployee, DeleteEmployee, EditEmployee } from "../services/employeeService";
 
 const employeeSlice = createSlice({
     name: "employee",
@@ -14,6 +14,9 @@ const employeeSlice = createSlice({
             state.employees = action.payload;
         },
         [DeleteEmployee.fulfilled]:(state,action)=>{
+            state.employees = action.payload;
+        },
+        [EditEmployee.fulfilled]:(state,action)=>{
             state.employees = action.payload;
         }
     }

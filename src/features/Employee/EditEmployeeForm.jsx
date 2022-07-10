@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomButton from "../../components/CustomButton";
@@ -10,7 +10,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { AddEmployee } from "../../services/employeeService";
+import { EditEmployee } from "../../services/employeeService";
 import './styles.css';
 
 const SgPhoneRegex = /\+65(6|8|9)\d{7}/g;
@@ -24,7 +24,12 @@ const schema = yup.object().shape({
   gender: yup.string().oneOf(["Male", "Female"]).required().default("Male"),
 });
 
-const AddEmployeeForm = () => {
+const EditEmployeeForm = (props) => {
+  const dispatch = useDispatch();
+
+  let navigate = useNavigate();
+  let location = useLocation();
+
   const {
     register,
     handleSubmit,
@@ -32,21 +37,20 @@ const AddEmployeeForm = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: location.state
   });
 
-  const dispatch = useDispatch();
-
-  let navigate = useNavigate();
+  
 
   const onSubmit = (data) => {
-    dispatch(AddEmployee(data));
-    navigate('../employee/list')
-
+    const updatedRc = {...data, uuid:location.state.uuid};
+    dispatch(EditEmployee(updatedRc));
+    navigate('../employee/list');
   };
 
   return (
     <>
-    <div className="header">{"Add Employee"}</div>
+    <div className="header">{"Edit Employee"}</div>
     <form  onSubmit={handleSubmit(onSubmit)}>
       <div className="form-div">
         <InputField
@@ -107,4 +111,4 @@ const AddEmployeeForm = () => {
   );
 };
 
-export default AddEmployeeForm;
+export default EditEmployeeForm;

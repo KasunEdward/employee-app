@@ -16,27 +16,11 @@ const EmployeeList = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
-  const handleClickDelete = (params) => {
-    setSelectedData(params.data.uuid);
-    setOpenDialog(true);
-  };
-
-  const handleDialogOk = () => {
-    dispatch(DeleteEmployee(selectedData));
-    setSelectedData(null);
-    setOpenDialog(false);
-  };
-
-  const handleDialogCancel = () => {
-    setSelectedData(null);
-    setOpenDialog(false);
-  };
-  
-// edit and delete buttons renddering component for grid
+  // edit and delete buttons renddering component for grid
   const btnCellRenderer = (params) => {
     return (
       <>
-        <CustomButton onClick={() => console.log(params)} label={"Edit"} />
+        <CustomButton onClick={(event)=>{handleClickEdit(event,params)}} label={"Edit"} />
         <CustomButton
           onClick={() => {
             handleClickDelete(params);
@@ -70,9 +54,33 @@ const EmployeeList = () => {
 
   let navigate = useNavigate();
 
+  // Handle Add button click
   const handleClickAdd = (event) => {
     event.preventDefault();
     navigate("../employee/add");
+  };
+
+  // Handle Edit button click
+  const handleClickEdit = (event, params) => {
+    event.preventDefault();
+    navigate("../employee/edit", {state: params.data});
+  };
+
+  // Handle delete button click
+  const handleClickDelete = (params) => {
+    setSelectedData(params.data.uuid);
+    setOpenDialog(true);
+  };
+
+  const handleDialogOk = () => {
+    dispatch(DeleteEmployee(selectedData));
+    setSelectedData(null);
+    setOpenDialog(false);
+  };
+
+  const handleDialogCancel = () => {
+    setSelectedData(null);
+    setOpenDialog(false);
   };
 
   return (
