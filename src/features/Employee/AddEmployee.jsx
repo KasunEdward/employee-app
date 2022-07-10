@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomButton from '../../components/CustomButton';
 
 const AddEmployee = () => {
     return(
