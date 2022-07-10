@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { Button } from "@mui/material";
+import CustomButton from "../../component/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { EmployeeActions } from "./actions";
 
@@ -36,7 +36,7 @@ const EmployeeList = () => {
   };
   return (
     <>
-      <Button onClick={handleClickAdd}>Add</Button>
+      <CustomButton onClick={handleClickAdd} label={"ADD"}/>
       <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
         <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
       </div>
