@@ -36,7 +36,7 @@ const EmployeeList = () => {
   };
   return (
     <>
-      <CustomButton onClick={handleClickAdd} label={"ADD"}/>
+      <CustomButton onClick={handleClickAdd} label={"ADD"} />
       <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
         <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
       </div>
