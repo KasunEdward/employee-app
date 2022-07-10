@@ -11,16 +11,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { AddEmployee } from "../../services/employeeService";
+import * as Utils from '../../utils.js';
 import './styles.css';
 
-const SgPhoneRegex = /\+65(6|8|9)\d{7}/g;
 
 //form validation schema
 const schema = yup.object().shape({
   firstName: yup.string().min(6).max(10).required(),
   lastName: yup.string().min(6).max(10).required(),
   email: yup.string().email().required(),
-  phone: yup.string().matches(SgPhoneRegex, "Invalid phone number").required(),
+  phone: yup.string().matches(Utils.SgPhoneRegex, "Invalid phone number").required(),
   gender: yup.string().oneOf(["Male", "Female"]).required().default("Male"),
 });
 

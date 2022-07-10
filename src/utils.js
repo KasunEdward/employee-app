@@ -1,0 +1,1 @@
+export const SgPhoneRegex = /\+65(6|8|9)\d{7}/g;
