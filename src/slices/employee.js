@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetEmployees } from "../services/employeeService";
+import { GetEmployees, AddEmployee } from "../services/employeeService";
 
 const employeeSlice = createSlice({
     name: "employee",
@@ -9,6 +9,9 @@ const employeeSlice = createSlice({
     extraReducers:{
         [GetEmployees.fulfilled]:(state,action)=>{
             state.employees = action.payload;
+        },
+        [AddEmployee.fulfilled]:(state,action)=>{
+            state.employees.unshift(action.payload)
         }
     }
 });

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import EmployeeList from "./features/Employee";
-import AddEmployee from "./features/Employee/AddEmployee";
+import AddEmployeeForm from "./features/Employee/AddEmployeeForm";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<Navigate to="/employee" />} />
         <Route path="/employee" element={<Navigate to="/employee/list" />} />
         <Route path="/employee/list" element={<EmployeeList />} />
-        <Route path="/employee/add" element={<AddEmployee />} />
+        <Route path="/employee/add" element={<AddEmployeeForm />} />
         {/* set path not listed to /employee/list */}
         <Route path="*" element={<Navigate to="/employee" />} />
       </Routes>
