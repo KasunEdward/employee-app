@@ -1,12 +1,19 @@
 .header {
-    text-align: center;
-    font-size: xx-large;
-    color:green;
-    margin: 20px
-  }
+  text-align: center;
+  font-size: xx-large;
+  color: green;
+  margin: 20px;
+}
 
-.form-div{
+.form-div {
   display: flex;
   justify-content: center;
-  margin:20px
+  margin: 20px;
+}
+
+.add-button-div {
+  display: flex;
+  justify-content: flex-end;
+  width: 1200px;
+  margin: auto;
 }

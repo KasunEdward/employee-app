@@ -79,7 +79,7 @@ const AddEmployeeForm = () => {
       <div className="form-div">
         <InputField
           name="phone"
-          label="Mobile Number"
+          label="Phone Number"
           error={Boolean(errors.phone)}
           errorMessage={errors.phone?.message}
           register={register}
@@ -101,7 +101,7 @@ const AddEmployeeForm = () => {
           )}
         />
       </div>
-      <CustomButton type="submit" label={"SAVE"} />
+      <CustomButton type="submit" label={"Submit"} />
     </form>
     </>
     
