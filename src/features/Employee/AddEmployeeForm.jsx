@@ -39,7 +39,6 @@ const AddEmployeeForm = () => {
   let navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(1111);
     dispatch(AddEmployee(data));
     navigate('../employee/list')
 

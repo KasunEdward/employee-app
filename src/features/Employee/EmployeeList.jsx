@@ -5,21 +5,44 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import CustomButton from "../../components/CustomButton";
+import CustomDialog from "../../components/CustomDialog";
 import { useNavigate } from "react-router-dom";
 import { GetEmployees, DeleteEmployee } from "../../services/employeeService";
-import './styles.css';
+import "./styles.css";
 
 const EmployeeList = () => {
   const dispatch = useDispatch();
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedData, setSelectedData] = useState(null);
+
+  const handleClickDelete = (params) => {
+    setSelectedData(params.data.uuid);
+    setOpenDialog(true);
+  };
+
+  const handleDialogOk = () => {
+    dispatch(DeleteEmployee(selectedData));
+    setSelectedData(null);
+    setOpenDialog(false);
+  };
+
+  const handleDialogCancel = () => {
+    setSelectedData(null);
+    setOpenDialog(false);
+  };
+  
+// edit and delete buttons renddering component for grid
   const btnCellRenderer = (params) => {
     return (
       <>
         <CustomButton onClick={() => console.log(params)} label={"Edit"} />
-        <CustomButton onClick={() =>{
-          console.log(params.data.uuid);
-           dispatch(DeleteEmployee(params.data.uuid))
-        }} label={"Delete"} />
+        <CustomButton
+          onClick={() => {
+            handleClickDelete(params);
+          }}
+          label={"Delete"}
+        />
       </>
     );
   };
@@ -63,6 +86,15 @@ const EmployeeList = () => {
       >
         <AgGridReact rowData={employees} columnDefs={columnDefs}></AgGridReact>
       </div>
+      <CustomDialog
+        open={openDialog}
+        title="Delete Employee"
+        content="Are you sure to delete?"
+        cancelLabel="Cancel"
+        okLabel="Yes"
+        handleCancel={handleDialogCancel}
+        handleOk={handleDialogOk}
+      />
     </>
   );
 };
