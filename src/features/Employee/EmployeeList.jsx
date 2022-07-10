@@ -19,15 +19,25 @@ const EmployeeList = () => {
   // edit and delete buttons renddering component for grid
   const btnCellRenderer = (params) => {
     return (
-      <>
-        <CustomButton onClick={(event)=>{handleClickEdit(event,params)}} label={"Edit"} />
-        <CustomButton
-          onClick={() => {
-            handleClickDelete(params);
-          }}
-          label={"Delete"}
-        />
-      </>
+      <div className="action-group-div">
+        <div className="action-button-div">
+          <CustomButton
+            var
+            onClick={(event) => {
+              handleClickEdit(event, params);
+            }}
+            label={"Edit"}
+          />
+        </div>
+        <div className="action-button-div">
+          <CustomButton
+            onClick={() => {
+              handleClickDelete(params);
+            }}
+            label={"Delete"}
+          />
+        </div>
+      </div>
     );
   };
 
@@ -63,7 +73,7 @@ const EmployeeList = () => {
   // Handle Edit button click
   const handleClickEdit = (event, params) => {
     event.preventDefault();
-    navigate("../employee/edit", {state: params.data});
+    navigate("../employee/edit", { state: params.data });
   };
 
   // Handle delete button click
@@ -85,8 +95,9 @@ const EmployeeList = () => {
 
   return (
     <>
+      <div className="header">{"Employee List"}</div>
       <div className="add-button-div">
-        <CustomButton onClick={handleClickAdd} label={"ADD"} />
+        <CustomButton variant='contained' onClick={handleClickAdd} label={"ADD"} />
       </div>
       <div
         className="ag-theme-alpine"

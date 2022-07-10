@@ -10,10 +10,21 @@
   justify-content: center;
   margin: 20px;
 }
+.form-button-div {
+  margin: 10px;
+}
+
+.action-group-div {
+  display: flex;
+}
+.action-button-div {
+  margin: 4px;
+}
 
 .add-button-div {
   display: flex;
   justify-content: flex-end;
   width: 1200px;
   margin: auto;
+  padding: 10px;
 }

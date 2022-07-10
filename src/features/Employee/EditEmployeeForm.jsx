@@ -48,6 +48,10 @@ const EditEmployeeForm = (props) => {
     navigate("../employee/list");
   };
 
+  const handleGoBack = () => {
+    navigate("../employee/list");
+  }
+
   return (
     <>
       <div className="header">{"Edit Employee"}</div>
@@ -108,7 +112,14 @@ const EditEmployeeForm = (props) => {
             )}
           />
         </div>
-        <CustomButton type="submit" label={"Submit"} />
+        <div className="form-div">
+          <div className="form-button-div">
+            <CustomButton variant='contained' onClick={handleGoBack} color="error" label={"Cancel"} />
+          </div>
+          <div className="form-button-div">
+            <CustomButton variant='contained' type="submit" label={"Submit"} />
+          </div>
+        </div>
       </form>
     </>
   );

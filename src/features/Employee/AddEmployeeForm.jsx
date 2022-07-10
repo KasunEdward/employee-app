@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomButton from "../../components/CustomButton";
@@ -11,16 +11,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { AddEmployee } from "../../services/employeeService";
-import * as Utils from '../../utils.js';
-import './styles.css';
-
+import * as Utils from "../../utils.js";
+import "./styles.css";
 
 //form validation schema
 const schema = yup.object().shape({
   firstName: yup.string().min(6).max(10).required(),
   lastName: yup.string().min(6).max(10).required(),
   email: yup.string().email().required(),
-  phone: yup.string().matches(Utils.SgPhoneRegex, "Invalid phone number").required(),
+  phone: yup
+    .string()
+    .matches(Utils.SgPhoneRegex, "Invalid phone number")
+    .required(),
   gender: yup.string().oneOf(["Male", "Female"]).required().default("Male"),
 });
 
@@ -40,70 +42,83 @@ const AddEmployeeForm = () => {
 
   const onSubmit = (data) => {
     dispatch(AddEmployee(data));
-    navigate('../employee/list')
-
+    navigate("../employee/list");
   };
+
+  const handleGoBack = () => {
+    navigate("../employee/list");
+  }
 
   return (
     <>
-    <div className="header">{"Add Employee"}</div>
-    <form  onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-div">
-        <InputField
-          name="firstName"
-          label="First Name"
-          error={Boolean(errors.firstName)}
-          errorMessage={errors.firstName?.message}
-          register={register}
-        />
-      </div>
-      <div className="form-div">
-        <InputField
-          name="lastName"
-          label="Last Name"
-          error={Boolean(errors.lastName)}
-          errorMessage={errors.lastName?.message}
-          register={register}
-        />
-      </div>
-      <div className="form-div">
-        <InputField
-          name="email"
-          label="Email Address"
-          error={Boolean(errors.email)}
-          errorMessage={errors.email?.message}
-          register={register}
-        />
-      </div>
-      <div className="form-div">
-        <InputField
-          name="phone"
-          label="Phone Number"
-          error={Boolean(errors.phone)}
-          errorMessage={errors.phone?.message}
-          register={register}
-        />
-      </div>
-      <div className="form-div">
-        <Controller
-          control={control}
-          name="gender"
-          render={({ field }) => (
-            <RadioGroup defaultValue="Male" {...field}>
-              <FormControlLabel value="Male" control={<Radio />} label="Male" />
-              <FormControlLabel
-                value="Female"
-                control={<Radio />}
-                label="Female"
-              />
-            </RadioGroup>
-          )}
-        />
-      </div>
-      <CustomButton type="submit" label={"Submit"} />
-    </form>
+      <div className="header">{"Add Employee"}</div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-div">
+          <InputField
+            name="firstName"
+            label="First Name"
+            error={Boolean(errors.firstName)}
+            errorMessage={errors.firstName?.message}
+            register={register}
+          />
+        </div>
+        <div className="form-div">
+          <InputField
+            name="lastName"
+            label="Last Name"
+            error={Boolean(errors.lastName)}
+            errorMessage={errors.lastName?.message}
+            register={register}
+          />
+        </div>
+        <div className="form-div">
+          <InputField
+            name="email"
+            label="Email Address"
+            error={Boolean(errors.email)}
+            errorMessage={errors.email?.message}
+            register={register}
+          />
+        </div>
+        <div className="form-div">
+          <InputField
+            name="phone"
+            label="Phone Number"
+            error={Boolean(errors.phone)}
+            errorMessage={errors.phone?.message}
+            register={register}
+          />
+        </div>
+        <div className="form-div">
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field }) => (
+              <RadioGroup defaultValue="Male" {...field}>
+                <FormControlLabel
+                  value="Male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="Female"
+                  control={<Radio />}
+                  label="Female"
+                />
+              </RadioGroup>
+            )}
+          />
+        </div>
+        <div className="form-div">
+          <div className="form-button-div">
+            <CustomButton variant='contained' onClick={handleGoBack} color="error" label={"Cancel"} />
+          </div>
+          <div className="form-button-div">
+            <CustomButton variant='contained' type="submit" label={"Submit"} />
+          </div>
+        </div>
+      </form>
     </>
-    
   );
 };
 
