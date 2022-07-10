@@ -6,7 +6,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import CustomButton from "../../components/CustomButton";
 import { useNavigate } from "react-router-dom";
-import { GetEmployees } from "../../services/employeeService";
+import { GetEmployees, DeleteEmployee } from "../../services/employeeService";
 import './styles.css';
 
 const EmployeeList = () => {
@@ -16,7 +16,10 @@ const EmployeeList = () => {
     return (
       <>
         <CustomButton onClick={() => console.log(params)} label={"Edit"} />
-        <CustomButton onClick={() => console.log("edit")} label={"Edit"} />
+        <CustomButton onClick={() =>{
+          console.log(params.data.uuid);
+           dispatch(DeleteEmployee(params.data.uuid))
+        }} label={"Delete"} />
       </>
     );
   };
