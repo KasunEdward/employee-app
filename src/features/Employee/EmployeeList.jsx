@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import {useSelector, useDispatch} from 'react-redux';
 import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import CustomButton from "../../components/CustomButton";
 import { useNavigate } from "react-router-dom";
-import { EmployeeActions } from "./actions";
+import { GetEmployees } from "../../services/employeeService";
 
 const EmployeeList = () => {
-  const [rowData, setRowData] = useState([]);
+  const dispatch = useDispatch();
   const columnDefs = [
     { field: "uuid", hide: true },
     { field: "firstName" },
@@ -18,15 +19,10 @@ const EmployeeList = () => {
     { field: "gender" },
   ];
   useEffect(() => {
-    EmployeeActions.getEmployee().then(
-      (response) => {
-        setRowData(response);
-      },
-      (error) => {
-        console.log("ghghgh");
-      }
-    );
+    dispatch(GetEmployees())
   }, []);
+
+  const { employees } = useSelector((state) => state.employee);
 
   let navigate = useNavigate();
 
@@ -38,7 +34,7 @@ const EmployeeList = () => {
     <>
       <CustomButton onClick={handleClickAdd} label={"ADD"} />
       <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
-        <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
+        <AgGridReact rowData={employees} columnDefs={columnDefs}></AgGridReact>
       </div>
     </>
   );

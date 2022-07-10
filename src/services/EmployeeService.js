@@ -1,7 +1,6 @@
-export const EmployeeService = {
-    // get employees arrray
-    getEmployee: async() => {
-        const employeeList = await localStorage.getItem('employeeList');
-        return JSON.parse(employeeList);
-    }
-}
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const GetEmployees = createAsyncThunk(
+    "employee/getEmployees",
+    async () => await JSON.parse(localStorage.getItem('employeeList'))
+)
