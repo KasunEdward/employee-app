@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import CustomButton from "../../component/CustomButton";
+import CustomButton from "../../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { EmployeeActions } from "./actions";
 

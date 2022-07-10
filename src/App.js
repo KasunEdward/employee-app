@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import EmployeeList from "./feature/Employee";
-import AddEmployee from "./feature/Employee/AddEmployee";
+import EmployeeList from "./features/Employee";
+import AddEmployee from "./features/Employee/AddEmployee";
 
 function App() {
   return (
