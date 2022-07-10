@@ -2,7 +2,6 @@ import React from "react";
 import TextField from '@mui/material/TextField';
 
 export const InputField = (props) => {
-    console.log(props);
   return (
     <TextField
     id="outlined-basic"

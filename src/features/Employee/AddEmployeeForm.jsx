@@ -1,12 +1,17 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import {useNavigate} from 'react-router-dom';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { AddEmployee } from "../../services/employeeService";
+import './styles.css';
 
 const SgPhoneRegex = /\+65(6|8|9)\d{7}/g;
 
@@ -16,7 +21,7 @@ const schema = yup.object().shape({
   lastName: yup.string().min(6).max(10).required(),
   email: yup.string().email().required(),
   phone: yup.string().matches(SgPhoneRegex, "Invalid phone number").required(),
-  gender: yup.string().oneOf(["Male", "Female"]).required(),
+  gender: yup.string().oneOf(["Male", "Female"]).required().default("Male"),
 });
 
 const AddEmployeeForm = () => {
@@ -31,50 +36,75 @@ const AddEmployeeForm = () => {
 
   const dispatch = useDispatch();
 
+  let navigate = useNavigate();
+
   const onSubmit = (data) => {
+    console.log(1111);
     dispatch(AddEmployee(data));
+    navigate('../employee/list')
+
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* <Controller
-      name="firstName"
-      control={control}
-      render={({ field }) => <InputField label={"firstName"} value={field.value} error={!!errors.firstName} errorMessage={errors?.firstName?.message}{...field} />}
-      /> */}
-      <InputField
-        name="firstName"
-        label="firstName"
-        error={Boolean(errors.firstName)}
-        errorMessage={errors.firstName?.message}
-        register = {register}
-      />
-{/* 
-      <TextField 
-          id="outlined-basic" 
-          name="firstName" 
-          label="First Name" 
-          variant="outlined" 
-          fullWidth 
-          {...register("firstName")}
+    <>
+    <div className="header">Add Employee</div>
+    <form  onSubmit={handleSubmit(onSubmit)}>
+      <div className="form-div">
+        <InputField
+          name="firstName"
+          label="First Name"
           error={Boolean(errors.firstName)}
-          helperText={errors.firstName?.message}
-        /> */}
-
-      <input {...register("lastName")} />
-      <p>{errors.lastName?.message}</p>
-
-      <input {...register("email")} />
-      <p>{errors.email?.message}</p>
-
-      <input {...register("phone")} />
-      <p>{errors.phone?.message}</p>
-
-      <input {...register("gender")} />
-      <p>{errors.gender?.message}</p>
-
-      <input type="submit" />
+          errorMessage={errors.firstName?.message}
+          register={register}
+        />
+      </div>
+      <div className="form-div">
+        <InputField
+          name="lastName"
+          label="Last Name"
+          error={Boolean(errors.lastName)}
+          errorMessage={errors.lastName?.message}
+          register={register}
+        />
+      </div>
+      <div className="form-div">
+        <InputField
+          name="email"
+          label="Email Address"
+          error={Boolean(errors.email)}
+          errorMessage={errors.email?.message}
+          register={register}
+        />
+      </div>
+      <div className="form-div">
+        <InputField
+          name="phone"
+          label="Mobile Number"
+          error={Boolean(errors.phone)}
+          errorMessage={errors.phone?.message}
+          register={register}
+        />
+      </div>
+      <div className="form-div">
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field }) => (
+            <RadioGroup defaultValue="Male" {...field}>
+              <FormControlLabel value="Male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="Female"
+                control={<Radio />}
+                label="Female"
+              />
+            </RadioGroup>
+          )}
+        />
+      </div>
+      <CustomButton type="submit" label={"SAVE"} />
     </form>
+    </>
+    
   );
 };
 
