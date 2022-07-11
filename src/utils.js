@@ -1,1 +1,1 @@
-export const SgPhoneRegex = /[6|8|9]\d{7}|\+65[6|8|9]\d{7}|\+65\s[6|8|9]\d{7}/g;
+export const SgPhoneRegex = /^\+65(6|8|9)\d{7}$/;
