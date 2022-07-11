@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
+import LeavingPopup from "../../components/LeavingPopup";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { TextField } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { EditEmployee } from "../../services/employeeService";
 import * as Utils from '../../utils.js';
+import { useNavigatingAway } from "../../hooks/useNavigatingAway";
 import "./styles.css";
 
 //form validation schema
@@ -24,28 +25,44 @@ const schema = yup.object().shape({
 });
 
 const EditEmployeeForm = (props) => {
-  const [isDirty, setIsDirty] = useState(true);
-  const [openDialog, setOpenDialog] = useState(false);
   const dispatch = useDispatch();
+  const [canShowDialogLeavingPage, setCanShowDialogLeavingPage] = useState(false);
 
-  let navigate = useNavigate();
-  let location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { isDirty, errors, isSubmitting, isSubmitSuccessful},
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: location.state,
   });
 
+  const [
+    showDialogLeavingPage,
+    confirmNavigation,
+    cancelNavigation
+  ] = useNavigatingAway(canShowDialogLeavingPage);
+
+  useEffect(()=>{
+    setCanShowDialogLeavingPage(isDirty);
+  },[isDirty]);
+
+  //navigate to /employee/list page when submit success
+  useEffect(()=>{
+    if(isSubmitSuccessful){
+      navigate("../employee/list");
+    }
+  },[isSubmitSuccessful]);
+
+
   const onSubmit = (data) => {
-    const updatedRc = { ...data, uuid: location.state.uuid };
-    dispatch(EditEmployee(updatedRc));
-    setIsDirty(false);
-    navigate("../employee/list");
+    setCanShowDialogLeavingPage(false);
+    const updatedRec = { ...data, uuid: location.state.uuid };
+    dispatch(EditEmployee(updatedRec));
   };
 
   const handleGoBack = () => {
@@ -121,6 +138,12 @@ const EditEmployeeForm = (props) => {
           </div>
         </div>
       </form>
+      <LeavingPopup
+        showDialog={showDialogLeavingPage}
+        setShowDialog={setCanShowDialogLeavingPage}
+        confirmNavigation={confirmNavigation}
+        cancelNavigation={cancelNavigation}
+      />
     </>
   );
 };
